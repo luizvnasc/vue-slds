@@ -1,14 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
-
-module.exports = {
-  entry: './src/main.js',
+const merge = require('webpack-merge')
+const commons = {
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    path: path.resolve(__dirname + '/dist/'),
   },
-  module: {
+   module: {
     rules: [
       {
         test: /\.css$/,
@@ -114,3 +111,20 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
+
+module.exports = [
+
+  merge(commons, {
+    entry: path.resolve(__dirname + '/src/index.js'),
+    output: {
+      filename: 'vue-slds.min.js',
+      libraryTarget: 'umd',
+
+      // These options are useful if the user wants to load the module with AMD
+      library: 'vue-slds',
+      umdNamedDefine: true
+    }
+  })
+
+  
+];

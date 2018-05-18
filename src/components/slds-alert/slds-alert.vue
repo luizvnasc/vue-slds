@@ -14,9 +14,9 @@
 </div>
 </template>
 <script>
-import closeIcon from "../../assets/icons/utility-sprite/svg/symbols.svg?close";
-import warningIcon from "../../assets/icons/utility-sprite/svg/symbols.svg?warning";
-import errorIcon from "../../assets/icons/utility-sprite/svg/symbols.svg?error";
+import closeIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?close";
+import warningIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?warning";
+import errorIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?error";
 export default {
   components: {
     "close-icon": closeIcon,
