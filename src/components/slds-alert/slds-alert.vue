@@ -33,7 +33,7 @@ export default {
       type: String,
       default: "info"
     },
-    time:{
+    timer:{
         type: Number,
         default: undefined
     },
@@ -50,6 +50,13 @@ export default {
     },
     isWarning() {
       return this.type === "warning";
+    }
+  },
+  watch:{
+    value: function(newVal, oldVal){
+      if(newVal && +this.timer > 0){
+        setTimeout(() => this.close(),this.timer)
+      }
     }
   },
   methods:{
