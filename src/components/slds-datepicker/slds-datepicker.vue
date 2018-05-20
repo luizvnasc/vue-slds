@@ -31,8 +31,8 @@
             </select>
           </div>
         </div>
-        <slds-month-table/>
       </div>
+      <slds-month-table/>
     </div>
 </template>
 <script>

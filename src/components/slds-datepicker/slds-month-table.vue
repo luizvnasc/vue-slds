@@ -3,25 +3,25 @@
         <thead>
             <tr id="weekdays">
             <th id="Sunday" scope="col">
-                <abbr title="Sunday">{{options.daysOfWeekInitials[0]}}</abbr>
+                <abbr title="Sunday">{{daysOfWeekInitials[0]}}</abbr>
             </th>
             <th id="Monday" scope="col">
-                <abbr title="Monday">{{options.daysOfWeekInitials[1]}}</abbr>
+                <abbr title="Monday">{{daysOfWeekInitials[1]}}</abbr>
             </th>
             <th id="Tuesday" scope="col">
-                <abbr title="Tuesday">{{options.daysOfWeekInitials[2]}}</abbr>
+                <abbr title="Tuesday">{{daysOfWeekInitials[2]}}</abbr>
             </th>
             <th id="Wednesday" scope="col">
-                <abbr title="Wednesday">{{options.daysOfWeekInitials[3]}}</abbr>
+                <abbr title="Wednesday">{{daysOfWeekInitials[3]}}</abbr>
             </th>
             <th id="Thursday" scope="col">
-                <abbr title="Thursday">{{options.daysOfWeekInitials[4]}}</abbr>
+                <abbr title="Thursday">{{daysOfWeekInitials[4]}}</abbr>
             </th>
             <th id="Friday" scope="col">
-                <abbr title="Friday">{{options.daysOfWeekInitials[5]}}</abbr>
+                <abbr title="Friday">{{daysOfWeekInitials[5]}}</abbr>
             </th>
             <th id="Saturday" scope="col">
-                <abbr title="Saturday">{{options.daysOfWeekInitials[6]}}</abbr>
+                <abbr title="Saturday">{{daysOfWeekInitials[6]}}</abbr>
             </th>
             </tr>
         </thead>
@@ -150,33 +150,7 @@ export default {
   props: {
     options: {
       type: Object,
-      default: () => {
-        return {
-          daysOfWeekInitials: {
-            type: Array,
-            default:() =>{ return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]}
-          },
-          months: {
-            type: Array,
-            default: function(){
-                return [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "Octuber",
-              "November",
-              "December"
-            ]
-            }
-          }
-        };
-      }
+      default: () => {return undefined}
     }
   },
   data: function() {
@@ -185,6 +159,17 @@ export default {
       year: moment().year(),
       day: moment().day()
     };
+  },
+  computed: {
+    daysOfWeekInitials: function() {
+      let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      if (this.options !== undefined)
+        return this.options.daysOfWeekInitials !== undefined ||
+          this.options.daysOfWeekInitials.length !== 7
+          ? this.options.daysOfWeekInitials
+          : daysOfWeek;
+      else return daysOfWeek;
+    }
   }
 };
 </script>
