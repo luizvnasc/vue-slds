@@ -2,144 +2,18 @@
     <table aria-labelledby="month" aria-multiselectable="true" class="slds-datepicker__month" role="grid">
         <thead>
             <tr id="weekdays">
-            <th id="Sunday" scope="col">
-                <abbr title="Sunday">{{daysOfWeekInitials[0]}}</abbr>
-            </th>
-            <th id="Monday" scope="col">
-                <abbr title="Monday">{{daysOfWeekInitials[1]}}</abbr>
-            </th>
-            <th id="Tuesday" scope="col">
-                <abbr title="Tuesday">{{daysOfWeekInitials[2]}}</abbr>
-            </th>
-            <th id="Wednesday" scope="col">
-                <abbr title="Wednesday">{{daysOfWeekInitials[3]}}</abbr>
-            </th>
-            <th id="Thursday" scope="col">
-                <abbr title="Thursday">{{daysOfWeekInitials[4]}}</abbr>
-            </th>
-            <th id="Friday" scope="col">
-                <abbr title="Friday">{{daysOfWeekInitials[5]}}</abbr>
-            </th>
-            <th id="Saturday" scope="col">
-                <abbr title="Saturday">{{daysOfWeekInitials[6]}}</abbr>
-            </th>
+                <th v-for="(dayOfWeek, i) in daysOfWeekInitials" :key="i" scope="col">
+                    <abbr :title="dayOfWeek">{{dayOfWeek}}</abbr>
+                </th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <td aria-disabled="true" aria-selected="false" class="slds-disabled-text" role="gridcell">
-                <span class="slds-day">31</span>
-            </td>
-            <td aria-selected="false" role="gridcell" tabindex="0">
-                <span class="slds-day">1</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">2</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">3</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">4</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">5</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">6</span>
-            </td>
-            </tr>
-            <tr>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">7</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">8</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">9</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">10</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">11</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">12</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">13</span>
-            </td>
-            </tr>
-            <tr>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">14</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">15</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">16</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">17</span>
-            </td>
-            <td aria-selected="false" aria-current="date" class="slds-is-today" role="gridcell">
-                <span class="slds-day">18</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">19</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">20</span>
-            </td>
-            </tr>
-            <tr class="">
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">21</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">22</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">23</span>
-            </td>
-            <td aria-selected="false" class="" role="gridcell">
-                <span class="slds-day">24</span>
-            </td>
-            <td aria-selected="false" class="" role="gridcell">
-                <span class="slds-day">25</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">26</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">27</span>
-            </td>
-            </tr>
-            <tr class="">
-            <td aria-selected="false" class="" role="gridcell">
-                <span class="slds-day">28</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">29</span>
-            </td>
-            <td aria-selected="false" role="gridcell">
-                <span class="slds-day">30</span>
-            </td>
-            <td aria-disabled="true" aria-selected="false" class="slds-disabled-text" role="gridcell">
-                <span class="slds-day">1</span>
-            </td>
-            <td aria-disabled="true" aria-selected="false" class="slds-disabled-text" role="gridcell">
-                <span class="slds-day">2</span>
-            </td>
-            <td aria-disabled="true" aria-selected="false" class="slds-disabled-text" role="gridcell">
-                <span class="slds-day">3</span>
-            </td>
-            <td aria-disabled="true" aria-selected="false" class="slds-disabled-text" role="gridcell">
-                <span class="slds-day">4</span>
-            </td>
+            <tr v-for="(week,index) in dateMatrix" :key="index">
+                <td v-for="day in week" :key="day.getTime()" role="gridcell" 
+                :class="{'slds-disabled-text': !isDayOfThisMonth(day), 'slds-is-selected': isSelected(day)}"  
+                @click="isDayOfThisMonth(day)? selectDate(day) : undefined">
+                    <span class="slds-day">{{day.getUTCDate()}}</span>
+                </td>
             </tr>
         </tbody>
         </table>
@@ -151,14 +25,11 @@ export default {
     options: {
       type: Object,
       default: () => {return undefined}
+    },
+    value: {
+       type: Date,
+       default: () => {return new Date()}
     }
-  },
-  data: function() {
-    return {
-      month: moment().month(),
-      year: moment().year(),
-      day: moment().day()
-    };
   },
   computed: {
     daysOfWeekInitials: function() {
@@ -169,6 +40,69 @@ export default {
           ? this.options.daysOfWeekInitials
           : daysOfWeek;
       else return daysOfWeek;
+    },
+    day:function(){
+        return this.value.getUTCDate();
+    },
+    month: function(){
+        return this.value.getUTCMonth();
+    },
+    year: function(){
+        return this.value.getUTCFullYear();
+    },
+    firstDayOfMonth(){
+        let firstDay = new Date();
+        firstDay.setUTCDate(1);
+        firstDay.setUTCMonth(this.month);
+        firstDay.setUTCFullYear(this.year)
+        return firstDay.getDay();
+    },
+    dateMatrix: function(){
+        let matrix = [];
+        let index = 1 - this.firstDayOfMonth;
+        for(let i = 0; i < 6; i++){
+            matrix.push([])
+            for(let j = 0; j < 7; j++){
+                let date = new Date()
+                date.setUTCDate(index);
+                if(index < 1){
+                    date.setUTCMonth(this.month-1 < 0 ? 11 : this.month-1);
+                }else{
+                   if(index > this.daysInMonth(this.month, this.year)){
+                       date.setUTCMonth(this.month+1 > 11? 0: this.month+1);
+                   } 
+                   else{
+                       date.setUTCMonth(this.month);
+                   }
+                }
+                
+                date.setUTCFullYear(this.year);
+                matrix[i].push(date);
+                index++
+            }
+        }
+        return matrix;
+    }
+    
+  },
+  methods:{
+    isDayOfThisMonth: function (day) {
+        let month = day.getUTCMonth();
+        return month === this.month ? true : false
+    },
+    daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+    },
+    selectDate: function (date){
+        this.value = date;
+        this.$emit('input', this.value)
+    },
+    isSelected: function (date){
+        if(this.value.getUTCDate() === date.getUTCDate() && 
+        this.value.getUTCMonth() === date.getUTCMonth() &&
+        this.value.getUTCFullYear() === date.getUTCFullYear())
+            return true
+        return false
     }
   }
 };
