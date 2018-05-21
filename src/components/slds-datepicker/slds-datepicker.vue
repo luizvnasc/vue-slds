@@ -1,7 +1,7 @@
 <template>
     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right" 
     :class="{'slds-dropdown-trigger_click slds-is-open': isOpen}">
-      <input type="text" id="date-input-id" placeholder=" " class="slds-input" value="06/24/2014" />
+      <input type="text" id="date-input-id" placeholder=" " class="slds-input" v-model="date" @blur="updateValue()"/>
       <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" :title="config.i18n.tip" @click="openDialog()">
         <event-icon class="slds-button__icon" aria-hidden="true"/>
         <span class="slds-assistive-text">{{config.i18n.tip}}</span>
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <slds-month-table/>
+      <slds-month-table v-model="value" :month="month" :year="year"/>
     </div>
 </template>
 <script>
@@ -42,7 +42,8 @@ import rightIcon from "../../../node_modules/@salesforce-ux/design-system/assets
 import _ from "lodash";
 import moment from "moment";
 import ClickOutside from "vue-click-outside";
-import SldsMonthTable from './slds-month-table'
+import SldsMonthTable from './slds-month-table';
+import VMasker from 'vanilla-masker'
 export default {
   directives: { ClickOutside },
   props: {
@@ -72,6 +73,14 @@ export default {
           }
         };
       }
+    },
+    format:{
+      type:String,
+      default: 'MM/DD/YYYY'
+    },
+    value: {
+      type: Date,
+      default: () =>{ return new Date()}
     }
   },
   components: {
@@ -83,8 +92,9 @@ export default {
   data: function() {
     return {
       isOpen: false,
-      month: 0,
-      year: moment().year()
+      month: new Date().getUTCMonth(),
+      year: new Date().getUTCFullYear(),
+      date: new Date()
     };
   },
   computed: {
@@ -93,6 +103,22 @@ export default {
     },
     currentMonthName: function() {
       return this.config.i18n.months[this.month];
+    }
+  },
+  watch:{
+    date: function(newVal,oldVal){
+      this.date = VMasker.toPattern(newVal, this.format.replace(/([a-zA-Z ])/g,'9'))
+    }, 
+    year: function(newVal,oldVal){
+      this.value.setUTCFullYear(newVal);
+      this.date = moment(this.value).format(this.format)
+    },
+    month: function(newVal,oldVal){
+      this.value.setUTCMonth(newVal);
+      this.date = moment(this.value).format(this.format)
+    },
+    value:function (newVal, oldVal){
+      this.date = moment(newVal).format(this.format)
     }
   },
   methods: {
@@ -116,11 +142,22 @@ export default {
     },
     closeDialog: function(event) {
         this.isOpen = false;
+        this.$emit('input', this.value)
     },
     openDialog: function() {
       console.log("abrir popup");
       this.isOpen = true;
+    },
+    updateValue: function(){
+      this.value = moment(this.date, this.format).toDate();
+      this.month = this.value.getUTCMonth();
+      this.year = this.value.getUTCFullYear();
     }
+  }, 
+  mounted: function (){
+    this.date = moment(this.value).format(this.format)
+    this.year = this.value.getUTCFullYear();
+    this.month = this.getUTCMonth();
   }
 };
 </script>

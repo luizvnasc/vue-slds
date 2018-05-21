@@ -29,6 +29,14 @@ export default {
     value: {
        type: Date,
        default: () => {return new Date()}
+    },
+    month:{
+        type: Number,
+        default: new Date().getUTCMonth()
+    },
+    year:{
+        type: Number,
+        default: new Date().getUTCFullYear()
     }
   },
   computed: {
@@ -40,15 +48,6 @@ export default {
           ? this.options.daysOfWeekInitials
           : daysOfWeek;
       else return daysOfWeek;
-    },
-    day:function(){
-        return this.value.getUTCDate();
-    },
-    month: function(){
-        return this.value.getUTCMonth();
-    },
-    year: function(){
-        return this.value.getUTCFullYear();
     },
     firstDayOfMonth(){
         let firstDay = new Date();
@@ -82,8 +81,15 @@ export default {
             }
         }
         return matrix;
-    }
-    
+    }  
+  },
+  watch:{
+      value: function(newVal,oldVal){
+          this.day = newVal.getUTCDate()
+          this.month = newVal.getUTCMonth()
+          this.year = newVal.getUTCFullYear();
+          this.$emit('input',this.value)
+      }
   },
   methods:{
     isDayOfThisMonth: function (day) {
