@@ -149,9 +149,14 @@ export default {
       this.isOpen = true;
     },
     updateValue: function(){
-      this.value = moment(this.date, this.format).toDate();
-      this.month = this.value.getUTCMonth();
-      this.year = this.value.getUTCFullYear();
+      let dt = moment(this.date, this.format);
+      if(dt.isValid()){
+        this.value = moment(this.date, this.format).toDate();
+        this.month = this.value.getUTCMonth();
+        this.year = this.value.getUTCFullYear();
+      }else{
+        this.value = undefined
+      }
     }
   }, 
   mounted: function (){

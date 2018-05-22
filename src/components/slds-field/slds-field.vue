@@ -7,7 +7,7 @@
     <div class="slds-form-element__control">
       <slot></slot>
     </div>
-    <div id="error-message" class="slds-form-element__help">{{error}}</div>
+    <div  class="slds-form-element__help">{{error}}</div>
   </div>
 </template>
 <script>

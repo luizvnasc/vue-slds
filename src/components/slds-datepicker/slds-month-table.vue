@@ -85,9 +85,11 @@ export default {
   },
   watch:{
       value: function(newVal,oldVal){
-          this.day = newVal.getUTCDate()
-          this.month = newVal.getUTCMonth()
-          this.year = newVal.getUTCFullYear();
+          if(newVal !== undefined){
+            this.day = newVal.getUTCDate()
+            this.month = newVal.getUTCMonth()
+            this.year = newVal.getUTCFullYear()
+          }
           this.$emit('input',this.value)
       }
   },
@@ -104,6 +106,7 @@ export default {
         this.$emit('input', this.value)
     },
     isSelected: function (date){
+        if(this.value === undefined) return false
         if(this.value.getUTCDate() === date.getUTCDate() && 
         this.value.getUTCMonth() === date.getUTCMonth() &&
         this.value.getUTCFullYear() === date.getUTCFullYear())
