@@ -12,7 +12,7 @@
                    :aria-controls="tab.hash"
                    :aria-selected="tab.isActive"
                    @click=" selectTabAction(tab.hash, $event)"
-                   :href="!readonly? tab.hash: ''"
+                   :href="tabURL(tab)"
                    class="slds-tabs_default__link"
                    role="tab"
                 >{{tab.header}}</a>
@@ -51,6 +51,10 @@ export default {
       return `vue-tabs-component.cache.${window.location.host}${
         window.location.pathname
       }`;
+    },
+    tabIndex(){
+      var self = this
+      return this.tabs.findIndex(function (tab){return tab.hash === self.activeTabHash})
     }
   },
   created() {
@@ -76,6 +80,13 @@ export default {
   methods: {
     findTab(hash) {
       return this.tabs.find(tab => tab.hash === hash);
+    },
+    findByIndex(i) {
+      if (i < 0 || i >= this.tabs.length) {
+        throw "Index out of bounds";
+        return;
+      }
+      return this.tabs[i];
     },
     selectTabAction(selectedTabHash, event){
         if(!this.readonly)
@@ -105,7 +116,7 @@ export default {
       );
     },
     selectTabByIndex(i) {
-      if (i < 0 || i > this.tabs.length) {
+      if (i < 0 || i >= this.tabs.length) {
         throw "Index out of bounds";
         return;
       }
@@ -129,6 +140,9 @@ export default {
           return true;
         });
       }
+    },
+    tabURL: function (tab){
+      return !this.readonly? window.location.pathname + tab.hash: ''
     }
   }
 };

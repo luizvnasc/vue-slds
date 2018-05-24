@@ -162,7 +162,7 @@ export default {
   mounted: function (){
     this.date = moment(this.value).format(this.format)
     this.year = this.value.getUTCFullYear();
-    this.month = this.getUTCMonth();
+    this.month = this.value.getUTCMonth();
   }
 };
 </script>
