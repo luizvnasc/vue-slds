@@ -17,6 +17,7 @@
             prefix: { default: '' },
             suffix: { default: '' },
             isDisabled:{ default: false },
+            route:{default:''}
         },
         data: () => ({
             isActive: false,
@@ -29,10 +30,11 @@
             hash() {
                 if (this.isDisabled) {
                     return '#';
-                }
+                }else{
                 return this.id ?
-                    '#' + this.id :
-                    '#' + this.name.toLowerCase().replace(/ /g, '-');
+                    this.route + '#' + this.id :
+                    this.route + '#' + this.name.toLowerCase().replace(/ /g, '-');
+                }
             },
         },
     };

@@ -106,7 +106,7 @@ export default {
         this.$emit('input', this.value)
     },
     isSelected: function (date){
-        if(this.value === undefined) return false
+        if(this.value === undefined || this.value === '' || this.value === null) return false
         if(this.value.getUTCDate() === date.getUTCDate() && 
         this.value.getUTCMonth() === date.getUTCMonth() &&
         this.value.getUTCFullYear() === date.getUTCFullYear())
