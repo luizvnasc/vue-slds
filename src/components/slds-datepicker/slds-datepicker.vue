@@ -36,14 +36,14 @@
     </div>
 </template>
 <script>
-import eventIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?event";
-import leftIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?left";
-import rightIcon from "../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?right";
-import _ from "lodash";
-import moment from "moment";
-import ClickOutside from "vue-click-outside";
+import eventIcon from '../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?event';
+import leftIcon from '../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?left';
+import rightIcon from '../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?right';
+import _ from 'lodash';
+import moment from 'moment';
+import ClickOutside from 'vue-click-outside';
 import SldsMonthTable from './slds-month-table';
-import VMasker from 'vanilla-masker'
+import VMasker from 'vanilla-masker';
 export default {
   directives: { ClickOutside },
   props: {
@@ -52,41 +52,43 @@ export default {
       default: () => {
         return {
           i18n: {
-            tip: "Select a date",
-            next_month: "Next Month",
-            previous_month: "Previous Month",
-            pick_year: "Pick a Year",
+            tip: 'Select a date',
+            next_month: 'Next Month',
+            previous_month: 'Previous Month',
+            pick_year: 'Pick a Year',
             months: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December"
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December'
             ]
           }
         };
       }
     },
-    format:{
-      type:String,
+    format: {
+      type: String,
       default: 'MM/DD/YYYY'
     },
     value: {
-      type: Date,
-      default: () =>{ return new Date()}
+      type: [Date, String],
+      default: () => {
+        return new Date();
+      }
     }
   },
   components: {
-    "event-icon": eventIcon,
-    "left-icon": leftIcon,
-    "right-icon": rightIcon,
+    'event-icon': eventIcon,
+    'left-icon': leftIcon,
+    'right-icon': rightIcon,
     'slds-month-table': SldsMonthTable
   },
   data: function() {
@@ -105,20 +107,23 @@ export default {
       return this.config.i18n.months[this.month];
     }
   },
-  watch:{
-    date: function(newVal,oldVal){
-      this.date = VMasker.toPattern(newVal, this.format.replace(/([a-zA-Z ])/g,'9'))
-    }, 
-    year: function(newVal,oldVal){
+  watch: {
+    date: function(newVal, oldVal) {
+      this.date = VMasker.toPattern(
+        newVal,
+        this.format.replace(/([a-zA-Z ])/g, '9')
+      );
+    },
+    year: function(newVal, oldVal) {
       this.value.setUTCFullYear(newVal);
-      this.date = moment(this.value).format(this.format)
+      this.date = moment(this.value).format(this.format);
     },
-    month: function(newVal,oldVal){
+    month: function(newVal, oldVal) {
       this.value.setUTCMonth(newVal);
-      this.date = moment(this.value).format(this.format)
+      this.date = moment(this.value).format(this.format);
     },
-    value:function (newVal, oldVal){
-      this.date = moment(newVal).format(this.format)
+    value: function(newVal, oldVal) {
+      this.date = moment(newVal).format(this.format);
     }
   },
   methods: {
@@ -141,28 +146,41 @@ export default {
       }
     },
     closeDialog: function(event) {
-        this.isOpen = false;
-        this.$emit('input', this.value)
+      this.isOpen = false;
+      this.$emit('input', this.value);
     },
     openDialog: function() {
-      console.log("abrir popup");
+      console.log('abrir popup');
       this.isOpen = true;
     },
-    updateValue: function(){
+    updateValue: function() {
       let dt = moment(this.date, this.format);
-      if(dt.isValid()){
+      if (dt.isValid()) {
         this.value = moment(this.date, this.format).toDate();
         this.month = this.value.getUTCMonth();
         this.year = this.value.getUTCFullYear();
-      }else{
-        this.value = undefined
+      } else {
+        this.value = undefined;
       }
     }
-  }, 
-  mounted: function (){
-    this.date = moment(this.value).format(this.format)
-    this.year = this.value.getUTCFullYear();
-    this.month = this.value.getUTCMonth();
+  },
+  created: function() {
+    if (this.value instanceof String)
+      this.value = moment(this.value).format(this.format);
+    if (
+      this.value === undefined ||
+      this.value === null ||
+      this.value === NaN ||
+      this.value === ''
+    ) {
+      this.date = this.value
+      this.year = new Date().getUTCFullYear();
+      this.month = new Date().getUTCMonth();
+    } else {
+      this.date = moment(this.value).format(this.format);
+      this.year = this.value.getUTCFullYear();
+      this.month = this.value.getUTCMonth();
+    }
   }
 };
 </script>

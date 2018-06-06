@@ -50,6 +50,7 @@ export default {
     close: function() {
       this.value = false;
       this.$emit('input', this.value);
+      this.$emit('close', this.value);
     }
   }
 };

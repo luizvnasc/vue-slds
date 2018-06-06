@@ -27,7 +27,7 @@ export default {
       default: () => {return undefined}
     },
     value: {
-       type: Date,
+       type: [Date,String],
        default: () => {return new Date()}
     },
     month:{
