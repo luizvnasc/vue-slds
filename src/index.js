@@ -7,7 +7,7 @@ import SldsDatePicker from './components/slds-datepicker/slds-datepicker'
 import SldsRadioGroup from './components/slds-radio-group/slds-radio-group'
 import SldsDataTable from './components/slds-data-table/slds-data-table'
 import SldsModal from './components/slds-modal'
-
+import SldsAutocomplete from './components/slds-autocomplete'
 const VueSlds = {
     install: (Vue) => {
         
@@ -19,6 +19,7 @@ const VueSlds = {
         Vue.component('slds-radio-group', SldsRadioGroup)
         Vue.component('slds-data-table', SldsDataTable)
         Vue.component('slds-modal', SldsModal)
+        Vue.component('slds-autocomplete',SldsAutocomplete)
     }
 }
 
