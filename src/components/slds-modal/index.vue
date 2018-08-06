@@ -1,6 +1,6 @@
 <template>
-    <div v-if="value" class="demo-only" >
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" >
+    <div v-if="value">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" :class="{'slds-modal_medium': size == 'medium', 'slds-modal_large': size == 'large'}" >
             <div class="slds-modal__container" v-click-outside="close">
                 <header class="slds-modal__header">
                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" @click="close()">
@@ -39,6 +39,10 @@ export default {
     contentClass:{
         type:[Object,Array,String]
         
+    }, 
+    size:{
+        type: String,
+        default: 'small'
     }
   },
   computed:{
@@ -58,6 +62,9 @@ export default {
 <style>
 .main {
     z-index: 99
+}
+.vue-slds-modal{
+    position: absolute !important;
 }
 </style>
 

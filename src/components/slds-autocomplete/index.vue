@@ -1,11 +1,10 @@
 <template>
-	<div class="slds-dropdown-trigger" :class="{'slds-is-open': isOpen}">
-		<input class="slds-input" v-model="inputText" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.enter="onEnter" @focus="hasFocus= true"
-  @blur="hasFocus = false">
+	<div class="slds-dropdown-trigger full-width" :class="{'slds-is-open': isOpen}">
+		<input class="slds-input" v-model="inputText" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.enter="onEnter" @focus="onFocus" @blur="onBlur">
 		<div v-show="isOpen" class="slds_dropdown_custom full-width">
 			<ul class="slds-dropdown__list autocomplete-list">
-				<li class="autocomplete-result slds-dropdown__item" :class="{'autocomplete-current':current === index}" v-for="(item,index) in filteredResult" :key="index" @click="select(item)">
-					{{displayMethod(item)}}
+				<li class="autocomplete-result slds-dropdown__item" :class="{'autocomplete-current':current === index}" v-for="(item,index) in filteredResult" :key="index">
+					<a @click="select(item)">{{displayMethod(item)}}</a>
 				</li>
 			</ul>
 		</div>
@@ -59,9 +58,9 @@ export default {
         filteredResult: function() {
             return this.items.filter(this.filterMethod(this.inputText));
         },
-        isOpen(){
-          return this.filteredResult.length > 0 && this.hasFocus
-        }
+        isOpen() {
+            return this.filteredResult.length > 0 && this.hasFocus;
+        },
     },
     methods: {
         select: function(item) {
@@ -82,6 +81,14 @@ export default {
         },
         onEnter() {
             this.select(this.filteredResult[this.current]);
+        },
+        onFocus(e) {
+            this.hasFocus = true;
+            this.$emit('focus', e);
+        },
+        onBlur(e) {
+            this.hasFocus = false;
+            this.$emit('blur', e);
         },
     },
 };

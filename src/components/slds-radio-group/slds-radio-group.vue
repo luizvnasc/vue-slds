@@ -60,6 +60,7 @@ export default {
   methods: {
     update: function() {
       this.$emit('input', this.value);
+      this.$emit('change', this.value)
     },
     _id: function (label){
         return label + '_' + this.rand
