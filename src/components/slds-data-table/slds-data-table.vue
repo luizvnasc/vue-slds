@@ -7,8 +7,8 @@
         }">
 			<thead>
 				<tr>
-					<th v-for="column in columns" :key="column.fieldName" :colspan="column.colspan || 0" :class="{'slds-is-sortable': column.sortable}">
-						<a class="slds-th__action slds-text-link_reset" role="button" tabindex="-1" @click="!!column.sortable ? sortColumn(column): undefined ">
+					<th v-for="column in columns" :key="column.fieldName" :colspan="column.colspan || 0" :class="{'slds-is-sortable': column.sortable}" >
+						<a class="slds-th__action slds-text-link_reset slds-align_absolute-center" role="button" tabindex="-1" @click="!!column.sortable ? sortColumn(column): undefined ">
 							<span class="slds-truncate">{{column.label}}</span>
 							<div v-if="!!column.sortable" class="slds-icon_container">
 								<arrow-down-icon class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon" v-if="column.sortable !== 'asc'" />
@@ -25,7 +25,7 @@
 				<!--default rows if slot is empty -->
 				<tr v-if="!hasCustomRow && dataset.length > 0" v-for="row in rowRange" :key="row">
 					<td v-for="column in columns" :key="column.fieldName" :colspan="column.colspan || 0">
-						{{dataset[row][column.fieldName] !== undefined ? dataset[row][column.fieldName] : '' }}
+						{{get(dataset[row],column.fieldName) !== undefined ? get(dataset[row],column.fieldName) : '' }}
 					</td>
 				</tr>
 				<!-- empty message -->
@@ -210,9 +210,9 @@ export default {
                 col.sortable = 'desc';
             }
         },
-        /**
-         * 
-         */
+        getValue(object,fieldName){
+            return _.get(object,fieldName)
+        },
         nextPages: function() {
             this.firstPage + 5 < this.numberOfPages ? (this.firstPage += 5) : null;
         },
