@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value" class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" 
+  <div v-if="open" class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" 
   v-bind:class="{'slds-theme_info': isInfo,'slds-theme_error': isError, 'slds-theme_warning': isWarning }" role="alert">
   <span class="slds-assistive-text">{{type}}</span>
   <span class="slds-icon_container slds-icon-utility-user slds-m-right_x-small" title="Description of icon when needed">
@@ -48,7 +48,7 @@ export default {
     }
   },
   watch:{
-    value: function(newVal, oldVal){
+    open: function(newVal, oldVal){
       if(newVal && +this.timer > 0){
         setTimeout(() => this.close(),this.timer)
       }
@@ -56,7 +56,7 @@ export default {
   },
   methods:{
       close: function(){
-          this.$emit('close',this.value)
+          this.$emit('close',this.open)
       }
   }
 };
