@@ -23,11 +23,6 @@ export default {
     "warn-icon": warningIcon,
     "error-icon": errorIcon
   },
-  data: function(){
-      return{
-         
-      }
-  },
   props: {
     type: {
       type: String,
@@ -37,7 +32,7 @@ export default {
         type: Number,
         default: undefined
     },
-    value:{
+    open:{
         type:Boolean
     }
   },
@@ -61,8 +56,7 @@ export default {
   },
   methods:{
       close: function(){
-          this.value = false
-          this.$emit('input',this.value)
+          this.$emit('close',this.value)
       }
   }
 };
