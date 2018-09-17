@@ -1,128 +1,72 @@
 <template>
-	<div class="slds-dropdown-trigger full-width" :class="{'slds-is-open': isOpen}">
-		<input class="slds-input" v-model="inputText" @keyup.down="onArrowDown" @keyup.up="onArrowUp" @keyup.enter="onEnter" @focus="onFocus" @blur="onBlur">
-		<div v-show="isOpen" class="slds_dropdown_custom full-width">
-			<ul class="slds-dropdown__list autocomplete-list">
-				<li class="autocomplete-result slds-dropdown__item" :class="{'autocomplete-current':current === index}" v-for="(item,index) in filteredResult" :key="index">
-					<a @click="select(item)">{{displayMethod(item)}}</a>
-				</li>
-			</ul>
+	<div class="slds-form-element__control">
+		<div class="slds-combobox_container">
+			<div class="slds-combobox slds-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+				<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+					<input type="text" class="slds-input slds-combobox__input" id="combobox-id-1" aria-autocomplete="list" aria-controls="listbox-id-1" autocomplete="off" role="textbox" v-model="value" @focus="focus()" @blur="blur()" @input="update()" />
+					<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+						<search-icon/>
+					</span>
+				</div>
+				<div v-show="hasFocus" id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+					<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+						<li v-for="(data,key) in dataset" :key="key" class="slds-listbox__item" @click="select(data)">
+							<div  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" >
+								<span  class="slds-media__body slds-clearfix">
+									<span   class="slds-float_left">{{data}}</span>
+								</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
+
 <script>
+import searchIcon from 'assets/icons/utility-sprite/svg/symbols.svg?search';
 export default {
     props: {
-        items: {
+        value: {
+            type: String,
+            required: true,
+        },
+        dataset: {
             type: Array,
-            required: true,
-        },
-        filterMethod: {
-            type: Function,
-            required: true,
-        },
-        displayMethod: {
-            type: Function,
-            required: true,
-        },
-        result: {
-            type: [Object, String],
+            default: () => {
+                return [];
+            },
         },
     },
-    data: () => {
+    components: {
+        'search-icon': searchIcon,
+    },
+    data() {
         return {
-            inputText: '',
             hasFocus: false,
-            current: -1,
         };
     },
-    watch: {
-        inputText: function(newVal, oldVal) {
-            let valueError = false;
-            if (this.filteredResult.length !== 1) {
-                valueError = true;
-            } else {
-                if (newVal !== this.displayMethod(this.filteredResult[0])) valueError = true;
-            }
-            if (valueError) {
-                this.current = -1;
-                this.result = undefined;
-                this.$emit('input', this.result);
-            }
-        },
-        result: function(newVal, oldVal) {
-            this.inputText = this.displayMethod(this.result);
-        },
-    },
-    computed: {
-        filteredResult: function() {
-            return this.items.filter(this.filterMethod(this.inputText));
-        },
-        isOpen() {
-            return this.filteredResult.length > 0 && this.hasFocus;
-        },
-    },
     methods: {
-        select: function(item) {
-            this.result = item;
-            this.current = -1;
-            this.inputText = this.displayMethod(this.result);
-            this.$emit('input', this.result);
-        },
-        onArrowDown(evt) {
-            if (this.current < this.filteredResult.length) {
-                this.current = this.current + 1;
-            }
-        },
-        onArrowUp() {
-            if (this.current > 0) {
-                this.current = this.current - 1;
-            }
-        },
-        onEnter() {
-            this.select(this.filteredResult[this.current]);
-        },
-        onFocus(e) {
+        focus() {
             this.hasFocus = true;
-            this.$emit('focus', e);
+            this.$emit('focus');
         },
-        onBlur(e) {
+        blur() {
             this.hasFocus = false;
-            this.$emit('blur', e);
+            this.$emit('blur');
+        },
+        update() {
+            this.$emit('input', this.value);
+        },
+        select(data) {
+            this.value = data;
+			this.update();
+			this.$emit('change',this.value)
         },
     },
 };
 </script>
-<style>
-.full-width {
-    width: 100%;
-}
-.autocomplete-result:hover,
-.autocomplete-current {
-    background-color: #007add;
-    color: white;
-}
-.autocomplete-list {
-    max-height: 350px;
-    overflow-y: scroll;
-}
-.autocomplete {
-    display: inline-block;
-}
-.slds_dropdown_custom {
-    position: absolute;
-    margin: 50%;
-    z-index: 7000;
-    float: left;
-    margin-top: 0.125rem;
-    margin-bottom: 0.125rem;
-    border: 1px solid #dddbda;
-    border-radius: 0.25rem;
-    padding: 0.25rem 0;
-    font-size: 0.75rem;
-    background: #fff;
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-    transform: translateX(-50%);
-}
-</style>
 
+<style>
+</style>

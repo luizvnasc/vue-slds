@@ -33,6 +33,7 @@
 			</div>
 			<slds-month-table v-model="date" :month="month" :year="year" />
 		</div>
+	</div>
 </template>
 <script>
 import eventIcon from '../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg?event';
@@ -97,7 +98,7 @@ export default {
             //Selected Date
             date: this.value,
             //Date as String
-            dateString:'' ,
+            dateString: '',
         };
     },
     computed: {
@@ -154,12 +155,12 @@ export default {
                 this.date = moment(this.dateString, this.format).toDate();
             } else {
                 this.date = undefined;
-                this.dateString = ''
+                this.dateString = '';
             }
         },
     },
-    mounted:function(){
-        this.dateString = this.date === undefined ? '': moment(this.date).format(this.format)
-    }
+    mounted: function() {
+        this.dateString = this.date === undefined ? '' : moment(this.date).format(this.format);
+    },
 };
 </script>

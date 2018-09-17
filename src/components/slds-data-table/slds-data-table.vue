@@ -7,7 +7,7 @@
         }">
 			<thead>
 				<tr>
-					<th v-for="column in columns" :key="column.fieldName" :colspan="column.colspan || 0" :class="{'slds-is-sortable': column.sortable}" >
+					<th v-for="column in columns" :key="column.fieldName" :colspan="column.colspan || 0" :class="{'slds-is-sortable': column.sortable}">
 						<a class="slds-th__action slds-text-link_reset slds-align_absolute-center" role="button" tabindex="-1" @click="!!column.sortable ? sortColumn(column): undefined ">
 							<span class="slds-truncate">{{column.label}}</span>
 							<div v-if="!!column.sortable" class="slds-icon_container">
@@ -32,13 +32,13 @@
 				<tr v-if="dataset.length === 0" :colaspan="colspan">
 					{{options.empty_message}}
 				</tr>
-				<tbody>
+			</tbody>
 
 		</table>
-    <!--footer if pagination is true -->
+		<!--footer if pagination is true -->
 		<div v-if="options.pagination === true" class="slds-border_top slds-border_bottom slds-p-around_x-small slds-grid">
 			<div class="slds-col slds-align_absolute-center slds-size_3-of-12">
-			
+
 			</div>
 			<div class="slds-col slds-size_6-of-12">
 				<ul class="slds-button-group-list slds-align_absolute-center">
@@ -210,8 +210,8 @@ export default {
                 col.sortable = 'desc';
             }
         },
-        getValue(object,fieldName){
-            return _.get(object,fieldName)
+        getValue(object, fieldName) {
+            return _.get(object, fieldName);
         },
         nextPages: function() {
             this.firstPage + 5 < this.numberOfPages ? (this.firstPage += 5) : null;
