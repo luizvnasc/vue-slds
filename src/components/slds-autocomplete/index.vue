@@ -8,9 +8,9 @@
 						<search-icon/>
 					</span>
 				</div>
-				<div v-show="hasFocus" id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+				<div v-show="hasFocus" id="listbox-id-1" class="slds-dropdown slds-dropdown_length-7 slds-dropdown_fluid" role="listbox">
 					<ul class="slds-listbox slds-listbox_vertical" role="presentation">
-						<li v-for="(data,key) in dataset" :key="key" class="slds-listbox__item" @click="select(data)">
+						<li class="slds-listbox__item" v-for="(data,key) in dataset" :key="key"  @click="setResult(data)">
 							<div  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" >
 								<span  class="slds-media__body slds-clearfix">
 									<span   class="slds-float_left">{{data}}</span>
@@ -26,6 +26,7 @@
 
 <script>
 import searchIcon from 'assets/icons/utility-sprite/svg/symbols.svg?search';
+import { setTimeout } from 'timers';
 export default {
     props: {
         value: {
@@ -50,19 +51,19 @@ export default {
     methods: {
         focus() {
             this.hasFocus = true;
-            this.$emit('focus');
+            this.$emit('focus')
         },
         blur() {
-            this.hasFocus = false;
-            this.$emit('blur');
-        },
+            var self = this
+            setTimeout(function(){ self.hasFocus = false},100)
+            this.$emit('blur')        
+        },  
         update() {
             this.$emit('input', this.value);
         },
-        select(data) {
+        setResult(data) {
             this.value = data;
 			this.update();
-			this.$emit('change',this.value)
         },
     },
 };
