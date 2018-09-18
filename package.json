@@ -1,7 +1,7 @@
 {
   "name": "vue-slds",
   "description": "A Vue.js project",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Guto <luiz.v.nasc@gmail.com>",
   "license": "MIT",
   "private": false,
