@@ -1,19 +1,24 @@
 <template>
-  <div class="slds-form-element" v-bind:class="{ 'slds-has-error': error !== undefined }">
-    <label class="slds-form-element__label" for="text-input-id-1">
-      <abbr v-if="required" class="slds-required" title="required">*</abbr>
-      {{label}}
-    </label>
-    <div class="slds-form-element__control">
-      <slot></slot>
-    </div>
-    <div  class="slds-form-element__help">{{error}}</div>
-  </div>
+	<div :class="{ 'slds-has-error': error !== undefined }" class="slds-form-element">
+		<label class="slds-form-element__label" for="text-input-id-1">
+			<abbr v-if="required" class="slds-required" title="required">*</abbr>
+			{{ label }}
+		</label>
+		<slds-tooltip v-if="!!tooltip" :tooltip="tooltip" />
+		<div class="slds-form-element__control">
+			<slot/>
+		</div>
+		<div class="slds-form-element__help">{{ error }}</div>
+	</div>
 </template>
 <script>
+import SldsTooltips from '../slds-tooltips'
 export default {
-  props: ["required", "error",'label']
-};
+	components:{
+		'slds-tooltip':SldsTooltips
+	},
+	props: ['required', 'error','label', 'tooltip']
+}
 </script>
 <style>
 </style>
