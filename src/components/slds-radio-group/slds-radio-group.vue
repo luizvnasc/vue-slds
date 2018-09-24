@@ -20,7 +20,8 @@
 					:id="_id(option.label)" 
 					:value="option.value" 
 					v-model="value" 
-					type="radio" 
+					type="radio"
+					:disabled="disabled"
 					@change="update()" >
 				<label 
 					:for="_id(option.label)" 
