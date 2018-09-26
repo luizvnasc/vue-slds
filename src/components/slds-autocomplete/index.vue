@@ -1,20 +1,20 @@
 <template>
 	<div class="slds-form-element__control">
 		<div class="slds-combobox_container">
-			<div class="slds-combobox slds-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+			<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="false" aria-haspopup="listbox" role="combobox">
 				<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
 					<input
 						id="combobox-id-1"
 						v-model="value"
 						type="text"
-						class="slds-input slds-combobox__input"
+						class="slds-input slds-combobox__input slds-combobox__input-value"
 						aria-autocomplete="list"
 						aria-controls="listbox-id-1"
 						autocomplete="off"
 						role="textbox"
 						@focus="focus()"
 						@blur="blur()"
-@input="update()" >
+						@input="update()" >
 					<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
 						<search-icon />
 					</span>
