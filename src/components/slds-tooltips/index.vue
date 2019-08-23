@@ -37,7 +37,7 @@ export default {
 <style>
 .vslds-tooltip {
   position: absolute;
-  top: -45px;
+  bottom: 100%;
   left: -15px;
   width: 100%;
   max-width: 300px;
