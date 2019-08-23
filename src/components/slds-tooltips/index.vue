@@ -1,6 +1,6 @@
 <template>
     <div class="slds-form-element__icon">
-        <button class="slds-button slds-button_icon slds-button slds-button_icon" aria-describedby="help" title="Help" @mouseover="show()">
+        <button class="slds-button slds-button_icon slds-button slds-button_icon" aria-describedby="help" title="Help" @mouseover="open = true" @mouseleave="open = false">
             <info-icon class="slds-button__icon" />
         </button>
         <div v-show="open" class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left vslds-tooltip" role="tooltip" id="help">
