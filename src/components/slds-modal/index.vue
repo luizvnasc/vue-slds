@@ -8,8 +8,10 @@
 			aria-modal="true" 
 			aria-describedby="modal-content-id-1" 
 			class="slds-modal slds-fade-in-open" >
-			<div 
+			<!--<div 
 				v-click-outside="close" 
+				class="slds-modal__container">-->
+				<div  
 				class="slds-modal__container">
 				<header class="slds-modal__header">
 					<button 
